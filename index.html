@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do-list</title>
+    <link rel="stylesheet" href="master/css/fontello.css">
+    <style>
+        *{
+            margin: 0;padding: 0;box-sizing: border-box;
+        }
+        body{
+            background: hsla(298, 68%, 90%, 1);
+
+            background: linear-gradient(90deg, hsla(298, 68%, 90%, 1) 0%, hsla(30, 82%, 91%, 1) 100%);
+            
+            background: -moz-linear-gradient(90deg, hsla(298, 68%, 90%, 1) 0%, hsla(30, 82%, 91%, 1) 100%);
+            
+            background: -webkit-linear-gradient(90deg, hsla(298, 68%, 90%, 1) 0%, hsla(30, 82%, 91%, 1) 100%);
+            
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F6D5F7", endColorstr="#FBE9D7", GradientType=1 );
+        }
+        main{
+            width: 330px;
+            height: 600px;
+            margin:40px auto;
+            border-radius: 10px;
+            >.imag{
+                width: 100%;
+                height: 35%;
+                background-image: url(Beautiful\ Landscape\ Desktop\ Wallpapers.jpg);
+                background-position:center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                position: relative;
+                &::after {
+                   background-color: rgba(0, 0, 0, 0.3);
+                   content: "";
+                   top: 0;
+                   left: 0;
+                   position: absolute;
+                   width: 100%;
+                   height: 100%;
+                   border-top-left-radius: 10px;
+                   border-top-right-radius: 10px;
+                }
+                >h2{
+                    width: 80%;
+                    position: absolute;
+                    top: 50%;
+                    left: 25%;
+                    z-index: 22;
+                    color: white;
+                    font-family: "Nunito", sans-serif;
+                    font-size: 30px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                }
+            }
+            >div{
+                width: 100%;
+                height: 65%;
+                background-color: rgb(23, 23, 23);
+               >input{
+                width: 80%;
+                height: 40px;
+                background-color: transparent;
+                margin-left: 15px;
+                padding-bottom: 5px;
+                padding-left: 5px;
+                border: none;
+                color: white;
+                border-bottom: 2px solid rgb(117, 117, 117);
+                font-size: 19px;
+                font-weight: 700;
+                outline: none;
+               }
+               >button{
+                width: 40px;
+                height: 40px;
+                margin-top: 10px;
+                padding-bottom: 10px;
+                background-color: transparent;
+                border: none;
+                color: rgb(255, 181, 16);
+                font-size: 20px;
+               }
+               >ul{
+                width: 100%;
+                padding-top: 10px;
+                >li{
+                    width: 80%;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 20px;
+                    >h3{
+                        width: 80%;
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 10px;
+                        color: #ffffff;
+                        font-size: 15px;
+                        cursor: pointer;
+                        font-weight: 200;
+                        font-family: "Nunito", sans-serif;
+                        padding: 5px 5px 5px 30px;
+                        transition: .3s;
+                        >span{
+                            font-size: 20px;
+                            color:rgb(255, 181, 16) ;
+                            text-shadow: -2px -2px 2px rgba(67, 67, 67, 0.5),2px 2px 4px rgba(0, 0, 0, 0.5),-2px -2px 2px rgba(67, 67, 67, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.3);
+                            margin-left: -35px;
+                        }
+                        &:hover{
+                            color: #bebebe;
+                            background-color: #3e3e3e;
+                            border-radius: 5px;
+                        }
+                    }
+                    >span{
+                        width: 10%;
+                        margin-left: 80px;
+                        font-size: 20px;
+                        color: #eaeaea;
+                    }
+                }
+               }
+            }
+            }
+            .check{
+              text-decoration: line-through;
+              >span{
+                opacity: 0;
+              }
+            }
+            .del{
+                transform: translateX(-1000px);
+                transition: .7s cubic-bezier(0,.01,.24,-0.07);
+            }
+    
+    </style>
+</head>
+<body>
+    <main>
+        <div class="imag">
+            <h2>Wednesday</h2>
+        </div>
+        <div class="form">
+            <input type="text" placeholder="Add item...">
+            <button><span class="icon-plus-1"></span></button>
+            <ul id="list"></ul>
+            
+        </div>
+    </main>
+
+    <script>
+        const inp =document.querySelector('.form>input')
+        const btn =document.querySelector('.form>button')
+        const list =document.querySelector('#list')
+        let flag = 0
+        btn.addEventListener('click' , ()=>{
+            if(flag>7){
+                alert('You have eight options....!!')
+            }else if(inp.value == ''){
+                alert('write in the box...!')
+            }else{
+                let li =document.createElement('li')
+                li.innerHTML=`
+                   <h3 ondblclick=mydtic(this) ><span onclick=mytick(this) class='icon-check-empty'></span>${inp.value}</h3>
+                   <span onclick=mydel(this) class='icon-trash-empty'></span>
+
+                `
+                list.appendChild(li)
+                inp.value=null
+                inp.focus()
+                flag++
+            }
+        })
+
+ 
+        const mytick = (s) =>{
+            s.parentNode.classList.add('check')
+        }
+
+
+        const mydel = (s) =>{
+            if(confirm('Are you sure!?')){
+                s.parentNode.classList.add('del')
+                setTimeout(() => {
+                    s.parentNode.remove()
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
